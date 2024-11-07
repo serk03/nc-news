@@ -7,7 +7,14 @@ const apiClient = axios.create({
 
 export function fetchArticles(){
     return apiClient.get('/articles').then((response)=>{
+        
         return response.data.articles
+    })   
+}
+
+export function fetchArticle (article_id) {
+    return apiClient.get(`/articles/${article_id}`).then((response)=>{
+        console.log(response);
+        return response
     })
-    
 }

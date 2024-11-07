@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { fetchArticles } from "../../axios"
 import ArticleCard from "./ArticleCard"
+import { Link } from "react-router-dom"
 
 //make api call to get all articles
 //use all articles to generate article card
@@ -8,7 +9,7 @@ import ArticleCard from "./ArticleCard"
 //useEffect
 
 export default function ArticleList() {
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
     const [Articles, setArticles] = useState([])
 
@@ -37,7 +38,8 @@ export default function ArticleList() {
     return (
         <ul id="item-list-card">
             {Articles.map((article) => {
-                return <ArticleCard key={article.article_id} author={article.author} title={article.title} topic={article.topic} created_at={article.created_at} votes={article.votes} article_img_url={article.article_img_url} comment_count={article.comment_count}></ArticleCard>
+                return <Link to={`/articles/${article.article_id}`} key={article.article_id}>  <ArticleCard article={article}></ArticleCard>
+                </Link>
             })}
 
         </ul>

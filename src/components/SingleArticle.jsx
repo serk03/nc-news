@@ -1,16 +1,20 @@
 import { fetchArticle } from "../../axios"
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 
 
 export default function SingleArticle() {
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
-    const [Articles, setArticles] = useState([])
+    const [article, setArticle] = useState([])
+    const { article_id } = useParams()
+    console.log(article_id);
+
 
     useEffect(() => {
-        fetchArticle()
+        fetchArticle(article_id)
             .then((article) => {
-                setArticles(article)
+                setArticle(article)
                 setIsLoading(false)
             })
             .catch((err) => {
@@ -18,7 +22,7 @@ export default function SingleArticle() {
                 setIsError(true)
                 console.log(err);
             })
-    }, [])
+    }, [article_id])
     if (isError) {
         return <p>Oh no! An error 😬</p>
     }
@@ -27,21 +31,21 @@ export default function SingleArticle() {
         return <p>Loading...</p>
     }
     return (
-        <div>
-            Article
-            console.log(article);
-            {/* <img src="" alt="" />
+        <div >
+            <h4 >{article.title}</h4>
+            <img src={article.article_img_url} alt="article image" />
+            <p>Likes:{article.votes}</p>
+
             <button>Thumb Up</button>
             <button>Thumb Down</button>
             <div>
-                <h4>Article Details</h4>
-                <P>Article Body</P>
+
+                <p>{article.body}</p>
             </div>
             <div>
                 <input type="text" />
                 <button>Add</button>
             </div>
-            <p>Likes:</p> */}
         </div>
     )
 }

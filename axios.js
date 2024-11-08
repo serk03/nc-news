@@ -14,7 +14,7 @@ export function fetchArticles(){
 
 export function fetchArticle (article_id) {
     return apiClient.get(`/articles/${article_id}`).then((response)=>{
-        console.log(response);
-        return response
+        console.log(response.data);
+        return response.data.article
     })
 }
